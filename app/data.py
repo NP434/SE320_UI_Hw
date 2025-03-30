@@ -7,12 +7,15 @@ from json import dump, load
 from datetime import date
 from requests import get
 import streamlit as st
+import os
 
 try:
-    API_KEY = st.secrets["API_KEY"] #load API key
-except Exception as e:
-    print(e)
-    API_KEY = None
+    API_KEY = os.getenv("API_KEY") #load API key
+except KeyError:
+    try:
+        API_KEY = st.secrets["API_KEY"]
+    except Exception as e:
+        print(e)
 
 
 @st.cache_data(ttl = 3600)
